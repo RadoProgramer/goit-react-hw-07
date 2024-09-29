@@ -1,16 +1,20 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import ContactForm from '../ContactForm/ContactForm';
 import ContactList from '../ContactList/ContactList';
 import SearchBox from '../SearchBox/SearchBox';
 import './Contacts.module.css';
 import { useSelector, useDispatch } from 'react-redux';
-import { addContact, deleteContact } from '../../redux/contactsSlice';
+import { fetchContacts, addContact, deleteContact } from '../../redux/contactsSlice';
 import { setFilter } from '../../redux/filtersSlice';
 
 const Contacts = () => {
-  const contacts = useSelector(state => state.contacts.items);
+  const { items: contacts, loading, error } = useSelector(state => state.contacts);
   const filter = useSelector(state => state.filters.name);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchContacts());
+  }, [dispatch]);
 
   const handleAddContact = (contact) => {
     const isDuplicate = contacts.some(existingContact => 
@@ -40,6 +44,8 @@ const Contacts = () => {
   return (
     <div className="contacts">
       <h1>Phonebook</h1>
+      {loading && <p>Loading...</p>}
+      {error && <p style={{ color: 'red' }}>{error}</p>}
       <ContactForm onAddContact={handleAddContact} />
       <h2>Contacts</h2>
       <SearchBox filter={filter} onChange={handleFilterChange} />

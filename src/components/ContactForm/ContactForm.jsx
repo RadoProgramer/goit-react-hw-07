@@ -17,8 +17,6 @@ const formatPhoneNumber = (value) => {
 };
 
 const ContactForm = ({ onAddContact }) => {
-  const [numberError, setNumberError] = useState("");
-
   const initialValues = {
     name: "",
     number: "",
@@ -32,9 +30,9 @@ const ContactForm = ({ onAddContact }) => {
       .required("Required"),
     number: Yup.string()
       .required("Required")
-      .test("is-valid-number", "Invalid phone number format", function(value) {
+      .test("is-valid-number", "Phone number must be between 8 and 10 digits", function(value) {
         const cleanedValue = value.replace(/\D/g, "");
-        return cleanedValue.length === 10; 
+        return cleanedValue.length >= 8 && cleanedValue.length <= 10;
       }),
   });
 
