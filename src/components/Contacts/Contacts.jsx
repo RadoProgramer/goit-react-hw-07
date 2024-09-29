@@ -15,7 +15,7 @@ const Contacts = () => {
   useEffect(() => {
     dispatch(fetchContacts());
   }, [dispatch]);
-
+console.log(contacts);
   const handleAddContact = (contact) => {
     const isDuplicate = contacts.some(existingContact => 
       existingContact.name.toLowerCase() === contact.name.toLowerCase()
