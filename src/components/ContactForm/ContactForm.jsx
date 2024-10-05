@@ -44,7 +44,7 @@ const ContactForm = ({ onAddContact }) => {
 		const newContact = {
 			id: nanoid(),
 			name: values.name,
-			number: formatPhoneNumber(values.number),
+			number: formatPhoneNumber(values.phone),
 		};
 
 		onAddContact(newContact);
